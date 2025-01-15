@@ -1,9 +1,10 @@
 import { LabelElement } from 'flow';
 import { Color, Vector2, Vector3, Vector4 } from 'three';
-import * as Nodes from 'three/nodes';
-import { uniform } from 'three/nodes';
+import * as Nodes from 'three/tsl';
+import { uniform } from 'three/tsl';
 import { BaseNodeEditor } from '../BaseNodeEditor.js';
 import { createInputLib } from '../NodeEditorUtils.js';
+import { setInputAestheticsFromType } from '../DataTypeLib.js';
 
 const typeToValue = {
 	'color': Color,
@@ -33,7 +34,7 @@ const createElementFromProperty = ( node, property ) => {
 
 	node[ property.name ] = defaultValue;
 
-	const element = new LabelElement( label ).setInput( property.defaultLength || 1 );
+	const element = setInputAestheticsFromType( new LabelElement( label ), nodeType );
 
 	if ( createInputLib[ nodeType ] !== undefined ) {
 
@@ -78,6 +79,8 @@ export class CustomNodeEditor extends BaseNodeEditor {
 			node = shaderNode;
 
 		}
+
+		node.nodeType = node.nodeType || settings.nodeType;
 
 		super( settings.name, node, 300 );
 

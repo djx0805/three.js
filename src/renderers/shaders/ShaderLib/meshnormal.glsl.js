@@ -20,8 +20,10 @@ export const vertex = /* glsl */`
 void main() {
 
 	#include <uv_vertex>
+	#include <batching_vertex>
 
 	#include <beginnormal_vertex>
+	#include <morphinstance_vertex>
 	#include <morphnormal_vertex>
 	#include <skinbase_vertex>
 	#include <skinnormal_vertex>
@@ -66,12 +68,14 @@ uniform float opacity;
 
 void main() {
 
+	vec4 diffuseColor = vec4( 0.0, 0.0, 0.0, opacity );
+
 	#include <clipping_planes_fragment>
 	#include <logdepthbuf_fragment>
 	#include <normal_fragment_begin>
 	#include <normal_fragment_maps>
 
-	gl_FragColor = vec4( packNormalToRGB( normal ), opacity );
+	gl_FragColor = vec4( packNormalToRGB( normal ), diffuseColor.a );
 
 	#ifdef OPAQUE
 

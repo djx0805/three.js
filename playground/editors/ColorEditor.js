@@ -1,7 +1,7 @@
 import { ColorInput, StringInput, NumberInput, LabelElement, Element } from 'flow';
 import { BaseNodeEditor } from '../BaseNodeEditor.js';
 import { Color } from 'three';
-import { UniformNode } from 'three/nodes';
+import { UniformNode } from 'three/webgpu';
 
 export class ColorEditor extends BaseNodeEditor {
 
@@ -11,8 +11,6 @@ export class ColorEditor extends BaseNodeEditor {
 		const node = new UniformNode( v );
 
 		super( 'Color', node );
-
-		this.setOutputLength( 3 );
 
 		const updateFields = ( editing ) => {
 

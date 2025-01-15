@@ -31,7 +31,7 @@
 			itemSize * numVertices
 			</code>
 			elements, where numVertices is the number of vertices in the associated
-			[page:BufferGemetry BufferGeometry].<br /><br />
+			[page:BufferGeometry BufferGeometry].<br /><br />
 
 			[page:Integer itemSize] -- the number of values of the array that should
 			be associated with a particular vertex. For instance, if this attribute is
@@ -70,6 +70,9 @@
 		<h3>[property:Boolean isBufferAttribute]</h3>
 		<p>Read-only flag to check if a given object is of type [name].</p>
 
+		<h3>[property:Integer id]</h3>
+		<p>Unique number for this attribute instance.</p>
+
 		<h3>[property:Integer itemSize]</h3>
 		<p>
 			The length of vectors that are being stored in the
@@ -99,16 +102,16 @@
 			the attribute array data to the GPU.
 		</p>
 
-		<h3>[property:Object updateRange]</h3>
+		<h3>[property:Object updateRanges]</h3>
 		<p>
-			Object containing:<br />
-			[page:Integer offset]: Default is `0`. Position at which to start
+			Array of objects containing:<br />
+			[page:Integer start]: Position at which to start
 			update.<br />
-			[page:Integer count]: Default is `-1`, which means don't use update
-			ranges. <br /><br />
+			[page:Integer count]: The number of components to update. <br /><br />
 
 			This can be used to only update some components of stored vectors (for
-			example, just the component related to color).
+			example, just the component related to color). Use the [page:BufferAttribute.addUpdateRange addUpdateRange]
+			function to add ranges to this array.
 		</p>
 
 		<h3>[property:Usage usage]</h3>
@@ -153,6 +156,18 @@
 		<p>
 			Applies matrix [page:Matrix4 m] to every Vector3 element of this
 			BufferAttribute, interpreting the elements as a direction vectors.
+		</p>
+
+		<h3>[method:this addUpdateRange]( [param:Integer start], [param:Integer count] )</h3>
+		<p>
+			Adds a range of data in the data array to be updated on the GPU. Adds an
+			object describing the range to the [page:BufferAttribute.updateRanges updateRanges]
+			array.
+		</p>
+
+		<h3>[method:this clearUpdateRanges]()</h3>
+		<p>
+			Clears the [page:BufferAttribute.updateRanges updateRanges] array.
 		</p>
 
 		<h3>[method:BufferAttribute clone]()</h3>
@@ -221,10 +236,10 @@
 			Instead, instantiate a new one and set the desired usage before the next
 			render.
 		</p>
-		
+
 		<h3>[method:Number setComponent]( [param:Integer index], [param:Integer component], [param:Float value] ) </h3>
 		<p>Sets the given component of the vector at the given index.</p>
-		
+
 		<h3>[method:this setX]( [param:Integer index], [param:Float x] )</h3>
 		<p>Sets the x component of the vector at the given index.</p>
 

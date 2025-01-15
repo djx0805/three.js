@@ -40,7 +40,9 @@
     "XRMediaBinding": "readonly",
     "CodeMirror": "readonly",
     "esprima": "readonly",
-    "jsonlint": "readonly"
+    "jsonlint": "readonly",
+    "VideoFrame": "readonly",
+    "VideoDecoder": "readonly"
   },
   "rules": {
     "no-throw-literal": [
@@ -55,6 +57,22 @@
       {
         "destructuring": "any",
         "ignoreReadBeforeAssign": false
+      }
+    ],
+    "no-irregular-whitespace": [
+      "error"
+    ],
+    "no-duplicate-imports": [
+      "error"
+    ],
+    "valid-jsdoc": [
+      "error",
+      {
+        "requireReturn": false,
+        "requireReturnType": true,
+        "requireParamDescription": false,
+        "requireReturnDescription": false,
+        "requireParamType": true
       }
     ]
   }

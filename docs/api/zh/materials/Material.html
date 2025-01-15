@@ -34,9 +34,18 @@
 </p>
 
 <h3>[property:Boolean alphaToCoverage]</h3>
-<p>
-启用alpha to coverage. 只能在开启了MSAA的渲染环境中使用 (当渲染器创建的时候*antialias* 属性要*true*才能使用).
-默认为 *false*.
+<p>启用 alpha 覆盖。 只能与启用 MSAA 的上下文一起使用（意味着在创建渲染器时将抗锯齿参数 *antialias* 设置为 `true`）。
+	启用此选项将平滑剪裁平面边缘和 alphaTest 剪辑边缘上的锯齿。 默认值为 `false`。
+</p>
+
+<h3>[property:Float blendAlpha]</h3>
+<p>表示恒定混合颜色的 alpha 值。 默认值为 `0`。<br />
+	此属性仅在使用 [page:CustomBlendingEquation ConstantAlpha] 或 [page:CustomBlendingEquation OneMinusConstantAlpha] 自定义混合时有效。
+</p>
+
+<h3>[property:Color blendColor]</h3>
+<p>表示恒定混合颜色的 RGB 值。 默认值为 `0x000000`。<br />
+	此属性仅在使用 [page:CustomBlendingEquation ConstantColor] 或 [page:CustomBlendingEquation OneMinusConstantColor] 自定义混合时有效。
 </p>
 
 <h3>[property:Integer blendDst]</h3>
@@ -302,6 +311,26 @@
 </p>
 <p>
 和其他属性不一样的是，这个回调在[page:Material.clone .clone]()，[page:Material.copy .copy]() 和 [page:Material.toJSON .toJSON]() 中不支持。
+</p>
+<p>
+	This callback is only supported in `WebGLRenderer` (not `WebGPURenderer`). 
+</p>
+<p>
+  [example:webgl_materials_modified WebGL / materials / modified]<br />
+  [example:webgl_shadow_contact WebGL / shadow / contact]
+</p>
+
+<h3>
+	[method:undefined onBeforeRender]( [param:WebGLRenderer renderer], [param:Scene scene], [param:Camera camera], [param:BufferGeometry geometry], [param:Object3D object], [param:Group group] )
+</h3>
+<p>
+	在使用材质渲染 3D 对象之前立即执行的可选回调。
+</p>
+<p>
+	与属性不同，回调不支持 [page:Material.clone .clone]()、[page:Material.copy .copy]() 和 [page:Material.toJSON .toJSON]()。
+</p>
+<p>
+	此回调仅支持 `WebGLRenderer` (不支持 `WebGPURenderer`)。
 </p>
 
 <h3>[method:String customProgramCacheKey]()</h3>

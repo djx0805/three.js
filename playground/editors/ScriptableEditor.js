@@ -1,7 +1,8 @@
 import { BaseNodeEditor } from '../BaseNodeEditor.js';
 import { CodeEditorElement } from '../elements/CodeEditorElement.js';
-import { disposeScene, getColorFromType, createElementFromJSON, isGPUNode, onValidType } from '../NodeEditorUtils.js';
-import { global, scriptable, js, scriptableValue } from 'three/nodes';
+import { disposeScene, resetScene, createElementFromJSON, isGPUNode, onValidType } from '../NodeEditorUtils.js';
+import { ScriptableNodeResources, scriptable, js, scriptableValue } from 'three/tsl';
+import { getColorFromType, setInputAestheticsFromType, setOutputAestheticsFromType } from '../DataTypeLib.js';
 
 const defaultTitle = 'Scriptable';
 const defaultWidth = 500;
@@ -67,9 +68,11 @@ export class ScriptableEditor extends BaseNodeEditor {
 
 	}
 
-	getOutputType() {
+	getColor() {
 
-		return this.layout ? this.layout.outputType : null;
+		const color = getColorFromType( this.layout ? this.layout.outputType : null );
+
+		return color ? color + 'BB' : null;
 
 	}
 
@@ -170,8 +173,7 @@ export class ScriptableEditor extends BaseNodeEditor {
 
 			const outputType = layout.outputType;
 
-			this.title.setOutputColor( getColorFromType( outputType ) );
-			this.title.setOutput( outputType && outputType !== 'void' ? this.outputLength : 0 );
+			setOutputAestheticsFromType( this.title, outputType );
 
 		} else {
 
@@ -187,8 +189,8 @@ export class ScriptableEditor extends BaseNodeEditor {
 
 		if ( editor && editorOutput === editorOutputAdded ) return;
 
-		const scene = global.get( 'scene' );
-		const composer = global.get( 'composer' );
+		const scene = ScriptableNodeResources.get( 'scene' );
+		const composer = ScriptableNodeResources.get( 'composer' );
 
 		if ( editor ) {
 
@@ -197,6 +199,8 @@ export class ScriptableEditor extends BaseNodeEditor {
 				editorOutputAdded.removeFromParent();
 
 				disposeScene( editorOutputAdded );
+
+				resetScene( scene );
 
 			} else if ( composer && editorOutputAdded && editorOutputAdded.isPass === true ) {
 
@@ -223,6 +227,8 @@ export class ScriptableEditor extends BaseNodeEditor {
 				editorOutputAdded.removeFromParent();
 
 				disposeScene( editorOutputAdded );
+
+				resetScene( scene );
 
 			} else if ( composer && editorOutputAdded && editorOutputAdded.isPass === true ) {
 
@@ -406,7 +412,7 @@ export class ScriptableEditor extends BaseNodeEditor {
 
 	_initExternalConnection() {
 
-		this.title.setInputColor( getColorFromType( 'CodeNode' ) ).setInput( 1 ).onValid( onValidType( 'CodeNode' ) ).onConnect( () => {
+		setInputAestheticsFromType( this.title, 'CodeNode' ).onValid( onValidType( 'CodeNode' ) ).onConnect( () => {
 
 			this.hasExternalEditor ? this._toExternal() : this._toInternal();
 

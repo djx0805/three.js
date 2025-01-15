@@ -27,6 +27,32 @@ export class VariableDeclaration {
 
 }
 
+export class Uniform {
+
+	constructor( type, name ) {
+
+		this.type = type;
+		this.name = name;
+
+		this.isUniform = true;
+
+	}
+
+}
+
+export class Varying {
+
+	constructor( type, name ) {
+
+		this.type = type;
+		this.name = name;
+
+		this.isVarying = true;
+
+	}
+
+}
+
 export class FunctionParameter {
 
 	constructor( type, name, qualifier = null, immutable = true ) {
@@ -125,6 +151,19 @@ export class Number {
 
 }
 
+export class String {
+
+	constructor( value ) {
+
+		this.value = value;
+
+		this.isString = true;
+
+	}
+
+}
+
+
 export class Conditional {
 
 	constructor( cond = null ) {
@@ -203,9 +242,9 @@ export class DynamicElement {
 
 export class AccessorElements {
 
-	constructor( property, elements = [] ) {
+	constructor( object, elements = [] ) {
 
-		this.property = property;
+		this.object = object;
 		this.elements = elements;
 
 		this.isAccessorElements = true;

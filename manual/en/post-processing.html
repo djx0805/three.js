@@ -86,9 +86,7 @@ composer.addPass(bloomPass);
 </pre>
 <p>Next we had a <code class="notranslate" translate="no">FilmPass</code> that draws noise and scanlines on top of its input.</p>
 <pre class="prettyprint showlinemods notranslate lang-js" translate="no">const filmPass = new FilmPass(
-    0.35,   // noise intensity
-    0.025,  // scanline intensity
-    648,    // scanline count
+    0.5,   // intensity
     false,  // grayscale
 );
 composer.addPass(filmPass);
@@ -156,18 +154,16 @@ that effect.</p>
 <p>Looking inside
 <a href="https://github.com/mrdoob/three.js/blob/master/examples/jsm/postprocessing/BloomPass.js"><code class="notranslate" translate="no">BloomPass.js</code></a>
 I found this line:</p>
-<pre class="prettyprint showlinemods notranslate lang-js" translate="no">this.copyUniforms[ "opacity" ].value = strength;
+<pre class="prettyprint showlinemods notranslate lang-js" translate="no">this.combineUniforms[ 'strength' ].value = strength;
 </pre>
 <p>So we can set the strength by setting</p>
-<pre class="prettyprint showlinemods notranslate lang-js" translate="no">bloomPass.copyUniforms.opacity.value = someValue;
+<pre class="prettyprint showlinemods notranslate lang-js" translate="no">bloomPass.combineUniforms.strength.value = someValue;
 </pre>
 <p>Similarly looking in
 <a href="https://github.com/mrdoob/three.js/blob/master/examples/jsm/postprocessing/FilmPass.js"><code class="notranslate" translate="no">FilmPass.js</code></a>
 I found these lines:</p>
-<pre class="prettyprint showlinemods notranslate lang-js" translate="no">if ( grayscale !== undefined )    this.uniforms.grayscale.value = grayscale;
-if ( noiseIntensity !== undefined ) this.uniforms.nIntensity.value = noiseIntensity;
-if ( scanlinesIntensity !== undefined ) this.uniforms.sIntensity.value = scanlinesIntensity;
-if ( scanlinesCount !== undefined ) this.uniforms.sCount.value = scanlinesCount;
+<pre class="prettyprint showlinemods notranslate lang-js" translate="no">this.uniforms.intensity.value = intensity;
+this.uniforms.grayscale.value = grayscale;
 </pre>
 <p>So which makes it pretty clear how to set them.</p>
 <p>Let's make a quick GUI to set those values</p>
@@ -177,15 +173,13 @@ if ( scanlinesCount !== undefined ) this.uniforms.sCount.value = scanlinesCount;
 <pre class="prettyprint showlinemods notranslate lang-js" translate="no">const gui = new GUI();
 {
   const folder = gui.addFolder('BloomPass');
-  folder.add(bloomPass.copyUniforms.opacity, 'value', 0, 2).name('strength');
+  folder.add(bloomPass.combineUniforms.strength, 'value', 0, 2).name('strength');
   folder.open();
 }
 {
   const folder = gui.addFolder('FilmPass');
   folder.add(filmPass.uniforms.grayscale, 'value').name('grayscale');
-  folder.add(filmPass.uniforms.nIntensity, 'value', 0, 1).name('noise intensity');
-  folder.add(filmPass.uniforms.sIntensity, 'value', 0, 1).name('scanline intensity');
-  folder.add(filmPass.uniforms.sCount, 'value', 0, 1000).name('scanline count');
+  folder.add(filmPass.uniforms.intensity, 'value', 0, 1).name('intensity');
   folder.open();
 }
 </pre>

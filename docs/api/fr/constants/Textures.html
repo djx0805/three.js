@@ -48,12 +48,12 @@
 		Ces constantes définissent les propriétés des textures [page:Texture.wrapS wrapS] et [page:Texture.wrapT wrapT],
 		qui définissent l'emballage de texture horizontal et vertical.<br /><br />
 
-		Avec [page:constant RepeatWrapping] la texure se répetera simplement à l'infini.<br /><br />
+		Avec [page:constant RepeatWrapping] la texture se répétera simplement à l'infini.<br /><br />
 
 		[page:constant ClampToEdgeWrapping] est la valeur par défaut.
 		Le dernier pixel de la texture s'étend jusqu'au bord du maillage.<br /><br />
 
-		Avec [page:constant MirroredRepeatWrapping] la texure se répetera à l'infini avec un effet mirroir à chaque répétition.
+		Avec [page:constant MirroredRepeatWrapping] la texture se répétera à l'infini avec un effet miroir à chaque répétition.
 		</p>
 
 		<h2>Filtres de grossissement</h2>
@@ -129,6 +129,7 @@
 		THREE.UnsignedShort4444Type
 		THREE.UnsignedShort5551Type
 		THREE.UnsignedInt248Type
+		THREE.UnsignedInt5999Type
 		</code>
 		<p>
 		À utiliser avec la propriété [page:Texture.type type] d'une texture, qui doit correspondre au format correct. Voir ci-dessous pour plus de détails.<br /><br />
@@ -143,6 +144,7 @@
 		THREE.RedIntegerFormat
 		THREE.RGFormat
 		THREE.RGIntegerFormat
+		THREE.RGBFormat
 		THREE.RGBAFormat
 		THREE.RGBAIntegerFormat
 		THREE.LuminanceFormat
@@ -160,23 +162,19 @@
 
 		[page:constant RedIntegerFormat] supprime les composants vert et bleu et lit uniquement le composant rouge.
 		Les texels sont lus comme des entiers au lieu de points flottants.
-		(ne peut être utilisé qu'avec un contexte de rendu WebGL 2).
 		<br /><br />
 
 		[page:constant RGFormat] supprime les composants alpha et bleu et lit les composants rouge et vert.
-		(ne peut être utilisé qu'avec un contexte de rendu WebGL 2).
 		<br /><br />
 
 		[page:constant RGIntegerFormat] supprime les composants alpha et bleu et lit les composants rouge et vert.
 		Les texels sont lus comme des entiers au lieu de points flottants.
-		(ne peut être utilisé qu'avec un contexte de rendu WebGL 2).
 		<br /><br />
 
 		[page:constant RGBAFormat] est la valeur par défaut et lit les composants rouge, vert, bleu et alpha.<br /><br />
 
 		[page:constant RGBAIntegerFormat] est la valeur par défaut et lit les composants rouge, vert, bleu et alpha.
 		Les texels sont lus comme des entiers au lieu de points flottants.
-		(ne peut être utilisé qu'avec un contexte de rendu WebGL 2).
 		<br /><br />
 
 		[page:constant LuminanceFormat] lit chaque élément comme une seule composante de luminance.
@@ -208,7 +206,7 @@
 		</code>
 		<p>
 		À utiliser avec la propriété [page:Texture.format format] d'une [page:CompressedTexture CompressedTexture],
-		ceux-ci doivent supporter l'extension 
+		ceux-ci doivent supporter l'extension
 		[link:https://www.khronos.org/registry/webgl/extensions/WEBGL_compressed_texture_s3tc/ WEBGL_compressed_texture_s3tc] <br /><br />
 
 		Il existe 4 formats [link:https://en.wikipedia.org/wiki/S3_Texture_Compression S3TC] disponibles avec cette extension. Ce sont :<br />
@@ -346,33 +344,29 @@
 		</code>
 
 		<p>
-
-		Attention : changer le format interne d'une texture n'affectera que le
-		texture lors de l'utilisation d'un contexte de rendu WebGL 2.<br /><br />
-
 		À utiliser avec la propriété de texture [page:Texture.internalFormat internalFormat],
 		ceux-ci définissent comment les éléments d'une texture, ou "texels", sont stockés sur le GPU.<br /><br />
 
 		[page:constante R8] stocke la composante rouge sur 8 bits.<br /><br />
 
 		[page:constant R8_SNORM] stocke la composante rouge sur 8 bits. Le composant est stocké comme normalisé. <br /><br />
-		
+
 		[page:constant R8I] stocke la composante rouge sur 8 bits. Le composant est stocké sous la forme d'un entier. <br /><br />
-		
+
 		[page:constant R8UI] stocke la composante rouge sur 8 bits. Le composant est stocké sous la forme d'un entier non signé. <br /><br />
-		
+
 		[page:constant R16I] stocke la composante rouge sur 16 bits. Le composant est stocké sous la forme d'un entier. <br /><br />
-		
+
 		[page:constant R16UI] stocke la composante rouge sur 16 bits. Le composant est stocké sous la forme d'un entier non signé. <br /><br />
-		
+
 		[page:constant R16F] stocke la composante rouge sur 16 bits. Le composant est stocké en point flottant. <br /><br />
-		
+
 		[page:constant R32I] stocke la composante rouge sur 32 bits. Le composant est stocké sous la forme d'un entier. <br /><br />
-		
+
 		[page:constant R32UI] stocke la composante rouge sur 32 bits. Le composant est stocké sous la forme d'un entier non signé. <br /><br />
-		
+
 		[page:constant R32F] stocke la composante rouge sur 32 bits. Le composant est stocké en point flottant. <br /><br />
-		
+
 		[page:constante RG8] stocke les composantes rouge et verte sur 8 bits chacune.<br /><br />
 
 		[page:constant RG8_SNORM] stocke les composantes rouge et verte sur 8 bits chacune.

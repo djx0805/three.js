@@ -38,7 +38,7 @@
 
 			const params = {
 				exposure: 1.0,
-				toneMapping: 'ACESFilmic',
+				toneMapping: 'AgX',
 				blurriness: 0.3,
 				intensity: 1.0,
 			};
@@ -49,6 +49,8 @@
 				Reinhard: THREE.ReinhardToneMapping,
 				Cineon: THREE.CineonToneMapping,
 				ACESFilmic: THREE.ACESFilmicToneMapping,
+				AgX: THREE.AgXToneMapping,
+				Neutral: THREE.NeutralToneMapping,
 				Custom: THREE.CustomToneMapping
 			};
 
@@ -127,10 +129,11 @@
 				window.addEventListener( 'resize', onWindowResize );
 
 				gui = new GUI();
-				const toneMappingFolder = gui.addFolder( 'tone mapping' );
+				const toneMappingFolder = gui.addFolder( 'Tone Mapping' );
 
 				toneMappingFolder.add( params, 'toneMapping', Object.keys( toneMappingOptions ) )
 
+					.name( 'type' )
 					.onChange( function () {
 
 						updateGUI( toneMappingFolder );
@@ -140,7 +143,16 @@
 
 					} );
 
-				const backgroundFolder = gui.addFolder( 'background' );
+				guiExposure = toneMappingFolder.add( params, 'exposure', 0, 2 )
+
+					.onChange( function ( value ) {
+
+						renderer.toneMappingExposure = value;
+						render();
+
+					} );
+
+				const backgroundFolder = gui.addFolder( 'Background' );
 
 				backgroundFolder.add( params, 'blurriness', 0, 1 )
 
@@ -168,23 +180,13 @@
 
 			function updateGUI( folder ) {
 
-				if ( guiExposure !== null ) {
+				if ( params.toneMapping === 'None' ) {
 
-					guiExposure.destroy();
-					guiExposure = null;
+					guiExposure.hide();
 
-				}
+				} else {
 
-				if ( params.toneMapping !== 'None' ) {
-
-					guiExposure = folder.add( params, 'exposure', 0, 2 )
-
-						.onChange( function () {
-
-							renderer.toneMappingExposure = params.exposure;
-							render();
-
-						} );
+					guiExposure.show();
 
 				}
 

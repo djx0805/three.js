@@ -1,6 +1,6 @@
 import { SelectInput, LabelElement } from 'flow';
 import { BaseNodeEditor } from '../BaseNodeEditor.js';
-import { uv } from 'three/nodes';
+import { uv } from 'three/tsl';
 
 export class UVEditor extends BaseNodeEditor {
 
@@ -9,8 +9,6 @@ export class UVEditor extends BaseNodeEditor {
 		const node = uv();
 
 		super( 'UV', node, 200 );
-
-		this.setOutputLength( 2 );
 
 		const optionsField = new SelectInput( [ '0', '1', '2', '3' ], 0 ).onChange( () => {
 
