@@ -46,7 +46,7 @@ class StructTypeNode extends Node {
 	 * Creates an instance of StructTypeNode.
 	 *
 	 * @param {Object} membersLayout - The layout of the members for the struct.
-	 * @param {string} [name=null] - The optional name of the struct.
+	 * @param {?string} [name=null] - The optional name of the struct.
 	 */
 	constructor( membersLayout, name = null ) {
 
@@ -62,7 +62,7 @@ class StructTypeNode extends Node {
 		/**
 		 * The name of the struct.
 		 *
-		 * @type {String}
+		 * @type {?string}
 		 * @default null
 		 */
 		this.name = name;
@@ -70,7 +70,7 @@ class StructTypeNode extends Node {
 		/**
 		 * This flag can be used for type testing.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @readonly
 		 * @default true
 		 */
@@ -82,7 +82,7 @@ class StructTypeNode extends Node {
 	 * Returns the length of the struct.
 	 * The length is calculated by summing the lengths of the struct's members.
 	 *
-	 * @returns {Number} The length of the struct.
+	 * @returns {number} The length of the struct.
 	 */
 	getLength() {
 

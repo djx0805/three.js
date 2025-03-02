@@ -72,9 +72,10 @@ export default StructNode;
 /**
  * TSL function for creating a struct node.
  *
+ * @tsl
  * @function
  * @param {Object} membersLayout - The layout of the struct members.
- * @param {string} [name=null] - The name of the struct.
+ * @param {?string} [name=null] - The name of the struct.
  * @returns {Function} The struct function.
  */
 export const struct = ( membersLayout, name = null ) => {

@@ -163,11 +163,16 @@ h3 {
 		padding-left: 64px;
 	}
 
+	ol.linenums .selected {
+		background-color: #ddd;
+	}
+
 	code {
 		display: inline-block;
 		vertical-align: middle;
 		border-radius: 4px;
 		padding: 0px 5px;
+		background-color: #F5F5F5;
 	}
 
 	pre {
@@ -175,13 +180,16 @@ h3 {
 		white-space: pre-wrap;
 		font-size: calc(var(--font-size) - 1px);
 		line-height: calc(var(--line-height) - 1px);
+		position: relative;
 	}
 
-	pre > code {
-		display: block;
-		box-sizing: border-box;
-		border-radius: 0;
+	pre code {
+		background-color: inherit;
 		padding: calc(var(--page-padding) - 6px) var(--page-padding);
+	}
+
+	pre.linenums code {
+		padding: 0px 5px;
 	}
 
 	.link-anchor {
@@ -203,6 +211,32 @@ h3 {
 		color: var(--text-color);
 	}
 
+	.copy-btn {
+		cursor: pointer;
+		position: absolute;
+		top: 16px;
+		right: 16px;
+		width: 24px;
+		height: 24px;
+		background-color: transparent;
+		background-image: url('/files/ic_copy_grey_24dp.svg');
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
+		opacity: 0.9;
+		border: none;
+	}
+	
+	.copy-btn:hover {
+		opacity: 1;
+	}
+	
+	.copy-btn.copied {
+		pointer-events: none;
+		opacity: 1;
+		background-image: url('/files/ic_tick_green_24dp.svg');
+	}
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -213,6 +247,14 @@ h3 {
 
 		.link-anchor {
 			color: #555;
+		}
+
+		ol.linenums .selected {
+			background-color: #444;
+		}
+
+		code {
+			background-color: #444;
 		}
 	
 	}

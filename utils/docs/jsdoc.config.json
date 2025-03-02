@@ -4,17 +4,19 @@
             "encoding": "utf8",
             "package": "package.json",
             "recurse": true,
-            "template": "utils/docs/template"
+            "template": "utils/docs/template",
+            "themeOpts": {
+                "ignoreInheritedSymbols": true
+            }
     },
     "plugins": [ "plugins/markdown" ],
     "source": {
         "include": [
             "examples/jsm/tsl",
-            "src/loaders/nodes", 
-            "src/materials/nodes", 
-            "src/nodes", 
-            "src/renderers/common", 
-            "src/renderers/webgpu" 
+            "src"
+        ],
+        "exclude": [
+            "src/extras/PMREMGenerator.js"
         ]
     }
 }

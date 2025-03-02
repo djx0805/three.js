@@ -31,7 +31,7 @@ class InstanceNode extends Node {
 	/**
 	 * Constructs a new instance node.
 	 *
-	 * @param {Number} count - The number of instances.
+	 * @param {number} count - The number of instances.
 	 * @param {InstancedBufferAttribute} instanceMatrix - Instanced buffer attribute representing the instance transformations.
 	 * @param {InstancedBufferAttribute} instanceColor - Instanced buffer attribute representing the instance colors.
 	 */
@@ -42,7 +42,7 @@ class InstanceNode extends Node {
 		/**
 		 * The number of instances.
 		 *
-		 * @type {Number}
+		 * @type {number}
 		 */
 		this.count = count;
 
@@ -63,14 +63,14 @@ class InstanceNode extends Node {
 		/**
 		 * The node that represents the instance matrix data.
 		 *
-		 * @type {Node}
+		 * @type {?Node}
 		 */
 		this.instanceMatrixNode = null;
 
 		/**
 		 * The node that represents the instance color data.
 		 *
-		 * @type {Node}
+		 * @type {?Node}
 		 */
 		this.instanceColorNode = null;
 
@@ -78,7 +78,7 @@ class InstanceNode extends Node {
 		 * The update type is set to `frame` since an update
 		 * of instanced buffer data must be checked per frame.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @default 'frame'
 		 */
 		this.updateType = NodeUpdateType.FRAME;
@@ -86,14 +86,14 @@ class InstanceNode extends Node {
 		/**
 		 * A reference to a buffer that is used by `instanceMatrixNode`.
 		 *
-		 * @type {InstancedInterleavedBuffer}
+		 * @type {?InstancedInterleavedBuffer}
 		 */
 		this.buffer = null;
 
 		/**
 		 * A reference to a buffer that is used by `instanceColorNode`.
 		 *
-		 * @type {InstancedBufferAttribute}
+		 * @type {?InstancedBufferAttribute}
 		 */
 		this.bufferColor = null;
 
@@ -213,8 +213,9 @@ export default InstanceNode;
 /**
  * TSL function for creating an instance node.
  *
+ * @tsl
  * @function
- * @param {Number} count - The number of instances.
+ * @param {number} count - The number of instances.
  * @param {InstancedBufferAttribute} instanceMatrix - Instanced buffer attribute representing the instance transformations.
  * @param {InstancedBufferAttribute} instanceColor - Instanced buffer attribute representing the instance colors.
  * @returns {InstanceNode}

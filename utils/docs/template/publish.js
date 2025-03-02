@@ -16,6 +16,7 @@ let data;
 let view;
 
 let outdir = path.normalize( env.opts.destination );
+const themeOpts = ( env.opts.themeOpts ) || {};
 
 function mkdirSync( filepath ) {
 
@@ -362,7 +363,7 @@ function buildClassNav( items, itemsSeen, linktoFn ) {
 
 				}
 
-				itemNav += `<li>${linktoFn( item.longname, displayName.replace( /\b(module|event):/g, '' ) )}</li>`;
+				itemNav += `<li data-name="${item.longname}">${linktoFn( item.longname, displayName.replace( /\b(module|event):/g, '' ) )}</li>`;
 
 				itemsSeen[ item.longname ] = true;
 
@@ -390,7 +391,9 @@ function buildClassNav( items, itemsSeen, linktoFn ) {
 
 			nav += `<h2>${mainCategory}</h2>`;
 
-			for ( const [ subCategory, links ] of map ) {
+			const sortedMap = new Map( [ ...map.entries() ].sort() ); // sort sub categories
+
+			for ( const [ subCategory, links ] of sortedMap ) {
 
 				nav += `<h3>${subCategory}</h3>`;
 
@@ -429,7 +432,7 @@ function buildGlobalsNav( globals, seen ) {
 
 			if ( kind !== 'typedef' && ! hasOwnProp.call( seen, longname ) && Array.isArray( tags ) && tags[ 0 ].title === 'tsl' ) {
 
-				tslNav += `<li>${linkto( longname, name )}</li>`;
+				tslNav += `<li data-name="${longname}">${linkto( longname, name )}</li>`;
 
 				seen[ longname ] = true;
 
@@ -447,7 +450,7 @@ function buildGlobalsNav( globals, seen ) {
 
 			if ( kind !== 'typedef' && ! hasOwnProp.call( seen, longname ) ) {
 
-				globalNav += `<li>${linkto( longname, name )}</li>`;
+				globalNav += `<li data-name="${longname}">${linkto( longname, name )}</li>`;
 
 			}
 
@@ -490,8 +493,8 @@ function pushNavItem( hierarchy, mainCategory, subCategory, itemNav ) {
 
 /**
  * Create the navigation sidebar.
- * @param {object} members The members that will be used to create the sidebar.
- * @param {array<object>} members.classes
+ * @param {Object} members The members that will be used to create the sidebar.
+ * @param {Array<Object>} members.classes
  * @return {string} The HTML for the navigation sidebar.
  */
 function buildNav( members ) {
@@ -508,7 +511,7 @@ function buildNav( members ) {
 
 /**
     @param {TAFFY} taffyData See <http://taffydb.com/>.
-    @param {object} opts
+    @param {Object} opts
     @param {Tutorial} tutorials
  */
 exports.publish = ( taffyData, opts, tutorials ) => {
@@ -721,6 +724,7 @@ exports.publish = ( taffyData, opts, tutorials ) => {
 	view.resolveAuthorLinks = resolveAuthorLinks;
 	view.htmlsafe = htmlsafe;
 	view.outputSourceFiles = outputSourceFiles;
+	view.ignoreInheritedSymbols = themeOpts.ignoreInheritedSymbols;
 
 	// once for all
 	view.nav = buildNav( members );
